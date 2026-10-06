@@ -1,0 +1,17 @@
+{
+  "name": "skills-therts649",
+  "description": "Skills de diseño, animación e interfaz para mis proyectos con Claude Code.",
+  "owner": { "name": "therts649" },
+  "plugins": [
+    {
+      "name": "emil-design",
+      "source": "./plugins/emil-design",
+      "description": "Skills de diseño y animación de Emil Kowalski, tal cual (MIT)."
+    },
+    {
+      "name": "diseno-qt",
+      "source": "./plugins/diseno-qt",
+      "description": "Adaptación de esas reglas a PySide6/Qt Widgets (apps de escritorio)."
+    }
+  ]
+}

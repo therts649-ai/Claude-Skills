@@ -1,0 +1,10 @@
+{
+  "name": "emil-design",
+  "displayName": "Emil Kowalski — diseño y animación",
+  "description": "Las skills de diseño e interfaz de Emil Kowalski (github.com/emilkowalski/skills), sin modificar: animación, revisión de movimiento, auditoría, vocabulario, diseño Apple, peor caso de UI, Sonner, Expo, Swift y más.",
+  "author": { "name": "Emil Kowalski", "url": "https://emilkowal.ski" },
+  "homepage": "https://github.com/emilkowalski/skills",
+  "repository": "https://github.com/emilkowalski/skills",
+  "license": "MIT",
+  "keywords": ["design", "animation", "ui", "motion"]
+}
