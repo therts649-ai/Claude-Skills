@@ -16,9 +16,14 @@
       "description": "impeccable de Paul Bakaus, tal cual (Apache 2.0): 1 skill con 24 comandos de diseño (critique, audit, polish…), subagentes y hooks del detector para web."
     },
     {
+      "name": "taste-skill",
+      "source": "./plugins/taste-skill",
+      "description": "taste-skill de Leonxlnx, tal cual (MIT): 13 skills contra el diseño genérico de IA (design-taste-frontend, redesign, minimalist, soft, brutalist, image-to-code…)."
+    },
+    {
       "name": "diseno-qt",
       "source": "./plugins/diseno-qt",
-      "description": "Adaptación a PySide6/Qt Widgets: diseno-qt (reglas de Emil) e impeccable-qt (cómo usar impeccable en escritorio)."
+      "description": "Adaptación a PySide6/Qt Widgets: diseno-qt (reglas de Emil), impeccable-qt y taste-qt (cómo usar impeccable y taste-skill en escritorio)."
     }
   ]
 }

@@ -7,7 +7,8 @@ Skills de diseño, animación e interfaz para usar en mis proyectos con Claude C
 | --- | --- |
 | `emil-design` | Las 14 skills de [Emil Kowalski](https://github.com/emilkowalski/skills) **sin modificar** (licencia MIT, ver `plugins/emil-design/LICENSE`). Versión copiada: ver `plugins/emil-design/UPSTREAM_COMMIT`. |
 | `impeccable` | [impeccable](https://github.com/pbakaus/impeccable) de Paul Bakaus **sin modificar** (Apache 2.0, ver `plugins/impeccable/LICENSE` y `NOTICE.md`): una skill con 24 comandos de diseño (`/impeccable critique`, `audit`, `polish`, `harden`, `clarify`…), 4 subagentes y, como plugin, los hooks de su detector para web. Versión copiada: `plugins/impeccable/UPSTREAM_COMMIT`. |
-| `diseno-qt` | Adaptación propia a **PySide6/Qt Widgets**, con dos skills: `diseno-qt` traduce las reglas de Emil (escritas para web: CSS, React) — `QPropertyAnimation`, curvas Bezier en `QEasingCurve`, opacidad, avisos flotantes, reducir movimiento, peor caso — e `impeccable-qt` dice cómo usar impeccable en escritorio: qué comandos aplican, cuáles se traducen, su «craft floor» en QSS y cómo verificar con capturas. |
+| `taste-skill` | [taste-skill](https://github.com/Leonxlnx/taste-skill) de Leonxlnx **sin modificar** (MIT, ver `plugins/taste-skill/LICENSE`): 13 skills contra el diseño genérico de IA. Versión copiada: `plugins/taste-skill/UPSTREAM_COMMIT`. |
+| `diseno-qt` | Adaptación propia a **PySide6/Qt Widgets**, con tres skills: `diseno-qt` traduce las reglas de Emil (escritas para web: CSS, React) — `QPropertyAnimation`, curvas Bezier en `QEasingCurve`, opacidad, avisos flotantes, reducir movimiento, peor caso — e `impeccable-qt` dice cómo usar impeccable en escritorio: qué comandos aplican, cuáles se traducen, su «craft floor» en QSS y cómo verificar con capturas; y `taste-qt` dice qué reglas de taste-skill se conservan en escritorio, cómo se traducen a QSS y qué valores de sus «diales» usar en una app de trabajo. |
 
 ### Skills de `emil-design`
 
@@ -27,6 +28,19 @@ Skills de diseño, animación e interfaz para usar en mis proyectos con Claude C
 | `ask-sonner` | Guía de la librería de toasts Sonner |
 | `animate-expo` | Animación en React Native / Expo |
 | `write-swift` | Swift moderno |
+
+### Skills de `taste-skill`
+
+| Skill (carpeta) | Para qué | Perfiles |
+| --- | --- | --- |
+| `design-taste-frontend` (`taste-skill`) | La principal: diales de diseño, reglas contra «AI tells», revisión final | qt, web |
+| `redesign-existing-projects` (`redesign-skill`) | Auditar y mejorar un proyecto existente sin romperlo | qt, web |
+| `full-output-enforcement` (`output-skill`) | Código completo, sin «...resto igual» | qt, web |
+| `minimalist-ui`, `high-end-visual-design` (`soft-skill`), `industrial-brutalist-ui` | Direcciones estéticas | web |
+| `gpt-taste` | Variante con GSAP | web |
+| `stitch-design-taste` | DESIGN.md para Google Stitch | web |
+| `image-to-code`, `imagegen-frontend-web`, `imagegen-frontend-mobile`, `brandkit` | Necesitan generar imágenes | todo |
+| `design-taste-frontend-v1` | Versión anterior, por compatibilidad | todo |
 
 ### impeccable en pocas palabras
 
@@ -65,6 +79,7 @@ En una sesión de Claude Code:
 /plugin marketplace add therts649-ai/claude-skills
 /plugin install emil-design@skills-therts649
 /plugin install impeccable@skills-therts649
+/plugin install taste-skill@skills-therts649
 /plugin install diseno-qt@skills-therts649
 ```
 
@@ -83,6 +98,18 @@ git -C /tmp/emil rev-parse HEAD > plugins/emil-design/UPSTREAM_COMMIT
 ```
 
 Revisa el contenido nuevo antes de hacer commit, y que `diseno-qt` siga correspondiendo.
+
+## Actualizar taste-skill
+
+```bash
+git clone --depth 1 https://github.com/Leonxlnx/taste-skill /tmp/taste
+rm -rf plugins/taste-skill/skills && cp -r /tmp/taste/skills plugins/taste-skill/skills
+rm -f plugins/taste-skill/skills/llms.txt
+cp /tmp/taste/LICENSE plugins/taste-skill/LICENSE
+git -C /tmp/taste rev-parse HEAD > plugins/taste-skill/UPSTREAM_COMMIT
+```
+
+Revisa que `taste-qt` siga correspondiendo.
 
 ## Actualizar impeccable
 
