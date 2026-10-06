@@ -1,17 +1,23 @@
 #!/usr/bin/env bash
-# Copia las skills de este repositorio a .claude/skills/ de un proyecto.
+# Copia las skills de este repositorio a .claude/ de un proyecto.
 #
 # Uso:  bash instalar.sh <carpeta-del-proyecto> [qt|web|todo]
 #   qt   (por defecto) app de escritorio PySide6/PyQt: las skills de diseño y
-#        animación que aplican a escritorio + diseno-qt (la traducción a Qt).
-#   web  sitio o app web: todas las de Emil menos Swift y Expo.
+#        animación que aplican a escritorio, impeccable, y las traducciones a Qt
+#        (diseno-qt e impeccable-qt).
+#   web  sitio o app web: impeccable + todas las de Emil menos Swift y Expo.
 #   todo todas.
+#
+# impeccable se copia con sus 4 subagentes (.claude/agents/) pero sin hooks;
+# en proyectos web se activan con «/impeccable hooks on».
 set -euo pipefail
 
 destino="${1:?Uso: bash instalar.sh <carpeta-del-proyecto> [qt|web|todo]}"
 perfil="${2:-qt}"
 aqui="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 emil="$aqui/plugins/emil-design/skills"
+qt="$aqui/plugins/diseno-qt/skills"
+imp="$aqui/proyecto/impeccable"
 
 case "$perfil" in
   qt)   skills=(emil-design-eng animate review-animations improve-animations find-animation-opportunities
@@ -22,17 +28,27 @@ case "$perfil" in
   *)    echo "Perfil desconocido: $perfil (usa qt, web o todo)" >&2; exit 1 ;;
 esac
 
-mkdir -p "$destino/.claude/skills"
-for s in "${skills[@]}"; do
-  rm -rf "$destino/.claude/skills/$s"
-  cp -r "$emil/$s" "$destino/.claude/skills/$s"
-done
+copiar() {  # copiar <origen> <nombre>
+  rm -rf "$destino/.claude/skills/$2"
+  cp -r "$1" "$destino/.claude/skills/$2"
+}
+
+mkdir -p "$destino/.claude/skills" "$destino/.claude/agents"
+for s in "${skills[@]}"; do copiar "$emil/$s" "$s"; done
+
+copiar "$imp/skills/impeccable" impeccable
+cp "$imp"/agents/*.md "$destino/.claude/agents/"
+skills+=(impeccable)
+
 if [ "$con_qt" = 1 ]; then
-  rm -rf "$destino/.claude/skills/diseno-qt"
-  cp -r "$aqui/plugins/diseno-qt/skills/diseno-qt" "$destino/.claude/skills/diseno-qt"
-  skills+=(diseno-qt)
+  for s in diseno-qt impeccable-qt; do copiar "$qt/$s" "$s"; skills+=("$s"); done
 fi
-# Aviso de licencia (MIT) de las skills de Emil Kowalski junto a las copias.
-cp "$aqui/plugins/emil-design/LICENSE" "$destino/.claude/skills/LICENSE-emil-kowalski-skills"
+
+# Avisos de licencia junto a las copias: MIT (Emil Kowalski) y Apache 2.0 (impeccable).
+ls "$destino/.claude/skills"/LICENSE-emil* >/dev/null 2>&1 \
+  || cp "$aqui/plugins/emil-design/LICENSE" "$destino/.claude/skills/LICENSE-emil-kowalski-skills"
+cp "$imp/LICENSE" "$destino/.claude/skills/impeccable/LICENSE"
+cp "$imp/NOTICE.md" "$destino/.claude/skills/impeccable/NOTICE.md"
 
 echo "Instaladas en $destino/.claude/skills: ${skills[*]}"
+echo "Subagentes de impeccable en $destino/.claude/agents"

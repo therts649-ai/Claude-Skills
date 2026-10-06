@@ -1,7 +1,9 @@
 {
   "name": "skills-therts649",
   "description": "Skills de diseño, animación e interfaz para mis proyectos con Claude Code.",
-  "owner": { "name": "therts649" },
+  "owner": {
+    "name": "therts649"
+  },
   "plugins": [
     {
       "name": "emil-design",
@@ -9,9 +11,14 @@
       "description": "Skills de diseño y animación de Emil Kowalski, tal cual (MIT)."
     },
     {
+      "name": "impeccable",
+      "source": "./plugins/impeccable",
+      "description": "impeccable de Paul Bakaus, tal cual (Apache 2.0): 1 skill con 24 comandos de diseño (critique, audit, polish…), subagentes y hooks del detector para web."
+    },
+    {
       "name": "diseno-qt",
       "source": "./plugins/diseno-qt",
-      "description": "Adaptación de esas reglas a PySide6/Qt Widgets (apps de escritorio)."
+      "description": "Adaptación a PySide6/Qt Widgets: diseno-qt (reglas de Emil) e impeccable-qt (cómo usar impeccable en escritorio)."
     }
   ]
 }

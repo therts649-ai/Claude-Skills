@@ -1,9 +1,19 @@
 {
   "name": "diseno-qt",
   "displayName": "Diseño y animación en Qt (PySide6)",
-  "description": "Traduce las reglas de las skills de Emil Kowalski (escritas para web) a PySide6/Qt Widgets: QPropertyAnimation, curvas Bezier en QEasingCurve, opacidad, avisos flotantes, reducir movimiento y pruebas de peor caso.",
-  "author": { "name": "therts649" },
+  "description": "Traduce las reglas de las skills de Emil Kowalski (escritas para web) a PySide6/Qt Widgets: QPropertyAnimation, curvas Bezier en QEasingCurve, opacidad, avisos flotantes, reducir movimiento y pruebas de peor caso. Incluye impeccable-qt: cómo usar impeccable (critique, audit, polish…) en apps de escritorio Qt.",
+  "author": {
+    "name": "therts649"
+  },
   "license": "MIT",
-  "keywords": ["qt", "pyside6", "design", "animation"],
-  "dependencies": ["emil-design"]
+  "keywords": [
+    "qt",
+    "pyside6",
+    "design",
+    "animation"
+  ],
+  "dependencies": [
+    "emil-design",
+    "impeccable"
+  ]
 }
