@@ -1,6 +1,6 @@
-# Skills de diseño para Claude Code
+# Skills para Claude Code
 
-Skills de diseño, animación e interfaz para usar en mis proyectos con Claude Code
+Skills de diseño, animación, interfaz e ingeniería para usar en mis proyectos con Claude Code
 (en la web, el escritorio o la terminal).
 
 | Plugin | Qué trae |
@@ -9,6 +9,8 @@ Skills de diseño, animación e interfaz para usar en mis proyectos con Claude C
 | `impeccable` | [impeccable](https://github.com/pbakaus/impeccable) de Paul Bakaus **sin modificar** (Apache 2.0, ver `plugins/impeccable/LICENSE` y `NOTICE.md`): una skill con 24 comandos de diseño (`/impeccable critique`, `audit`, `polish`, `harden`, `clarify`…), 4 subagentes y, como plugin, los hooks de su detector para web. Versión copiada: `plugins/impeccable/UPSTREAM_COMMIT`. |
 | `taste-skill` | [taste-skill](https://github.com/Leonxlnx/taste-skill) de Leonxlnx **sin modificar** (MIT, ver `plugins/taste-skill/LICENSE`): 13 skills contra el diseño genérico de IA. Versión copiada: `plugins/taste-skill/UPSTREAM_COMMIT`. |
 | `diseno-qt` | Adaptación propia a **PySide6/Qt Widgets**, con tres skills: `diseno-qt` traduce las reglas de Emil (escritas para web: CSS, React) — `QPropertyAnimation`, curvas Bezier en `QEasingCurve`, opacidad, avisos flotantes, reducir movimiento, peor caso — e `impeccable-qt` dice cómo usar impeccable en escritorio: qué comandos aplican, cuáles se traducen, su «craft floor» en QSS y cómo verificar con capturas; y `taste-qt` dice qué reglas de taste-skill se conservan en escritorio, cómo se traducen a QSS y qué valores de sus «diales» usar en una app de trabajo. |
+| `mattpocock-skills` | Las 27 skills estables de [Matt Pocock](https://github.com/mattpocock/skills) **sin modificar** (MIT, ver `plugins/mattpocock-skills/LICENSE`): proceso de ingeniería (entrevista, especificación, tickets, TDD, revisión, diagnóstico de errores, arquitectura). No incluye las de `in-progress` (beta). Versión copiada: `plugins/mattpocock-skills/UPSTREAM_COMMIT`. |
+| `ingenieria-python` | Adaptación propia: cómo usar las de Matt en proyectos **Python** (pytest, `monkeypatch`, PySide6), en Claude Code en la nube (sin CLI `gh`) y con un `CLAUDE.md` que manda (subagentes, pruebas obligatorias, idioma). |
 
 ### Skills de `emil-design`
 
@@ -54,6 +56,23 @@ Skills de diseño, animación e interfaz para usar en mis proyectos con Claude C
 - La copia en `proyecto/impeccable/` es la variante para instalar dentro de `.claude/` de un
   proyecto (rutas `.claude/skills/impeccable/...`); la de `plugins/impeccable/` es la del plugin.
 
+### Skills de `mattpocock-skills`
+
+| Skill | Para qué |
+| --- | --- |
+| `ask-matt` | Cuál skill usar y en qué orden |
+| `grill-me`, `grilling`, `grill-with-docs` | Entrevista implacable para afinar un plan (con glosario/ADRs en la última) |
+| `to-spec`, `to-tickets`, `to-questionnaire` | Pasar la conversación a especificación, tickets o cuestionario |
+| `tdd` | Rojo → verde, una rebanada vertical a la vez, en «seams» acordados |
+| `implement`, `implement-spec` | Construir un ticket o una especificación completa (con `tdd` y revisión al final) |
+| `code-review` (se instala como `code-review-matt`) | Revisión en dos ejes: estándares del repo y especificación |
+| `diagnosing-bugs` | Diagnóstico disciplinado: reproducir, aislar, probar la causa |
+| `codebase-design`, `improve-codebase-architecture` | Módulos profundos: vocabulario y un informe de oportunidades |
+| `domain-modeling` | Glosario del negocio y ADRs |
+| `triage`, `wayfinder`, `research`, `prototype`, `pr`, `retro`, `wizard` | Triage de issues, orientarse, investigar, prototipos desechables, PRs, retrospectiva, asistentes bash |
+| `handoff`, `teach`, `wait-what`, `writing-for-agents` | Traspaso de sesión, enseñar un tema, aclarar confusiones, escribir para agentes |
+| `setup-matt-pocock-skills` | Configura issue tracker, etiquetas y glosario del repo (interactiva, se invoca a mano) |
+
 ## Usarlas en otro proyecto
 
 ### Opción A — copiarlas al proyecto (la más simple, funciona en cualquier sesión)
@@ -71,6 +90,16 @@ bash /tmp/claude-skills/instalar.sh . qt     # perfiles: qt (escritorio), web, t
 
 Las skills quedan en `.claude/skills/` del proyecto; haz commit para que se carguen en cada sesión.
 
+Las de ingeniería (Matt Pocock + `ingenieria-python`) van con su propio instalador:
+
+```bash
+bash /tmp/claude-skills/instalar-ingenieria.sh .
+```
+
+Renombra `code-review` → `code-review-matt` (y `prototype` → `prototype-matt` si ya hay otra
+`prototype`) y actualiza las referencias entre skills; agrega una sección al `CLAUDE.md` del
+proyecto que diga que se usan con `ingenieria-python`.
+
 ### Opción B — como plugin (se actualizan desde aquí)
 
 En una sesión de Claude Code:
@@ -81,6 +110,8 @@ En una sesión de Claude Code:
 /plugin install impeccable@skills-therts649
 /plugin install taste-skill@skills-therts649
 /plugin install diseno-qt@skills-therts649
+/plugin install mattpocock-skills@skills-therts649
+/plugin install ingenieria-python@skills-therts649
 ```
 
 Como plugin, impeccable trae sus hooks activos (revisan archivos web después de cada edición).
@@ -125,3 +156,17 @@ git -C /tmp/imp rev-parse HEAD > plugins/impeccable/UPSTREAM_COMMIT
 ```
 
 Revisa que `impeccable-qt` siga correspondiendo (comandos nuevos o renombrados).
+
+## Actualizar las skills de Matt Pocock
+
+```bash
+git clone --depth 1 https://github.com/mattpocock/skills /tmp/matt
+rm -rf plugins/mattpocock-skills && mkdir -p plugins/mattpocock-skills/.claude-plugin
+python3 -c "import json,shutil;p=json.load(open('/tmp/matt/.claude-plugin/plugin.json'));[shutil.copytree('/tmp/matt/'+r,'plugins/mattpocock-skills/'+r) for r in p['skills']]"
+cp /tmp/matt/.claude-plugin/plugin.json plugins/mattpocock-skills/.claude-plugin/
+cp /tmp/matt/LICENSE plugins/mattpocock-skills/LICENSE
+git -C /tmp/matt rev-parse HEAD > plugins/mattpocock-skills/UPSTREAM_COMMIT
+```
+
+Revisa que `ingenieria-python` siga correspondiendo (skills nuevas, renombradas o que ahora
+usen otras herramientas).

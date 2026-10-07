@@ -1,6 +1,6 @@
 {
   "name": "skills-therts649",
-  "description": "Skills de diseño, animación e interfaz para mis proyectos con Claude Code.",
+  "description": "Skills de diseño, animación, interfaz e ingeniería para mis proyectos con Claude Code.",
   "owner": {
     "name": "therts649"
   },
@@ -24,6 +24,16 @@
       "name": "diseno-qt",
       "source": "./plugins/diseno-qt",
       "description": "Adaptación a PySide6/Qt Widgets: diseno-qt (reglas de Emil), impeccable-qt y taste-qt (cómo usar impeccable y taste-skill en escritorio)."
+    },
+    {
+      "name": "mattpocock-skills",
+      "source": "./plugins/mattpocock-skills",
+      "description": "Skills de ingeniería de Matt Pocock, tal cual (MIT): 27 skills (tdd, code-review, diagnosing-bugs, grill-me, to-spec, to-tickets, implement, triage, codebase-design…)."
+    },
+    {
+      "name": "ingenieria-python",
+      "source": "./plugins/ingenieria-python",
+      "description": "Cómo usar las skills de Matt Pocock en proyectos Python (pytest, PySide6), en la nube y respetando el CLAUDE.md del proyecto."
     }
   ]
 }
