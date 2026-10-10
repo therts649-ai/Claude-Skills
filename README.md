@@ -8,9 +8,10 @@ Skills de diseño, animación, interfaz e ingeniería para usar en mis proyectos
 | `emil-design` | Las 14 skills de [Emil Kowalski](https://github.com/emilkowalski/skills) **sin modificar** (licencia MIT, ver `plugins/emil-design/LICENSE`). Versión copiada: ver `plugins/emil-design/UPSTREAM_COMMIT`. |
 | `impeccable` | [impeccable](https://github.com/pbakaus/impeccable) de Paul Bakaus **sin modificar** (Apache 2.0, ver `plugins/impeccable/LICENSE` y `NOTICE.md`): una skill con 24 comandos de diseño (`/impeccable critique`, `audit`, `polish`, `harden`, `clarify`…), 4 subagentes y, como plugin, los hooks de su detector para web. Versión copiada: `plugins/impeccable/UPSTREAM_COMMIT`. |
 | `taste-skill` | [taste-skill](https://github.com/Leonxlnx/taste-skill) de Leonxlnx **sin modificar** (MIT, ver `plugins/taste-skill/LICENSE`): 13 skills contra el diseño genérico de IA. Versión copiada: `plugins/taste-skill/UPSTREAM_COMMIT`. |
-| `diseno-qt` | Adaptación propia a **PySide6/Qt Widgets**, con tres skills: `diseno-qt` traduce las reglas de Emil (escritas para web: CSS, React) — `QPropertyAnimation`, curvas Bezier en `QEasingCurve`, opacidad, avisos flotantes, reducir movimiento, peor caso — e `impeccable-qt` dice cómo usar impeccable en escritorio: qué comandos aplican, cuáles se traducen, su «craft floor» en QSS y cómo verificar con capturas; y `taste-qt` dice qué reglas de taste-skill se conservan en escritorio, cómo se traducen a QSS y qué valores de sus «diales» usar en una app de trabajo. |
+| `diseno-qt` | Adaptación propia a **PySide6/Qt Widgets**, con cuatro skills: `diseno-qt` traduce las reglas de Emil (escritas para web: CSS, React) — `QPropertyAnimation`, curvas Bezier en `QEasingCurve`, opacidad, avisos flotantes, reducir movimiento, peor caso — e `impeccable-qt` dice cómo usar impeccable en escritorio: qué comandos aplican, cuáles se traducen, su «craft floor» en QSS y cómo verificar con capturas; y `taste-qt` dice qué reglas de taste-skill se conservan en escritorio, cómo se traducen a QSS y qué valores de sus «diales» usar en una app de trabajo; `antislop-qt` traduce las reglas de anti-slop (contraste en cada modo del tema, teclado, estados, verificar con pruebas y capturas) y dice cuáles no aplican en escritorio. |
 | `mattpocock-skills` | Las 27 skills estables de [Matt Pocock](https://github.com/mattpocock/skills) **sin modificar** (MIT, ver `plugins/mattpocock-skills/LICENSE`): proceso de ingeniería (entrevista, especificación, tickets, TDD, revisión, diagnóstico de errores, arquitectura). No incluye las de `in-progress` (beta). Versión copiada: `plugins/mattpocock-skills/UPSTREAM_COMMIT`. |
 | `ingenieria-python` | Adaptación propia: cómo usar las de Matt en proyectos **Python** (pytest, `monkeypatch`, PySide6), en Claude Code en la nube (sin CLI `gh`) y con un `CLAUDE.md` que manda (subagentes, pruebas obligatorias, idioma). |
+| `anti-slop` | Las 6 skills de [anti-slop](https://github.com/miqdadbadjuber/anti-slop) de Miqdad Badjuber **sin modificar** (MIT, ver `plugins/anti-slop/LICENSE`): un filtro contra el «AI slop» que exige propósito escrito para cada técnica visual y prohíbe lo deshonesto (datos inventados, controles muertos, contraste bajo). `antislop` es el núcleo; `antislop-ui`, `antislop-copywriting`, `antislop-human` (con `contrast-check.py`), `antislop-layoutmobile` y `antislop-code` profundizan un tema. Para Qt se usan con `antislop-qt` (en `diseno-qt`). Versión copiada: `plugins/anti-slop/UPSTREAM_COMMIT`. |
 
 ### Skills de `emil-design`
 
@@ -100,6 +101,17 @@ Renombra `code-review` → `code-review-matt` (y `prototype` → `prototype-matt
 `prototype`) y actualiza las referencias entre skills; agrega una sección al `CLAUDE.md` del
 proyecto que diga que se usan con `ingenieria-python`.
 
+Las de anti-slop (+ `antislop-qt`) también:
+
+```bash
+bash /tmp/claude-skills/instalar-antislop.sh .
+```
+
+Luego agrega al final del `CLAUDE.md` del proyecto el bloque `<!-- antislop:start -->` …
+`<!-- antislop:end -->` con las rutas a `.claude/skills/antislop*/SKILL.md` y el modo del proyecto
+(`during`/`after`). Sin ese bloque, su núcleo corre su asistente de instalación y pregunta el modo
+en cada sesión. Ejemplo: el `CLAUDE.md` de `therts649-ai/Compilar`.
+
 ### Opción B — como plugin (se actualizan desde aquí)
 
 En una sesión de Claude Code:
@@ -112,6 +124,7 @@ En una sesión de Claude Code:
 /plugin install diseno-qt@skills-therts649
 /plugin install mattpocock-skills@skills-therts649
 /plugin install ingenieria-python@skills-therts649
+/plugin install anti-slop@skills-therts649
 ```
 
 Como plugin, impeccable trae sus hooks activos (revisan archivos web después de cada edición).
@@ -170,3 +183,15 @@ git -C /tmp/matt rev-parse HEAD > plugins/mattpocock-skills/UPSTREAM_COMMIT
 
 Revisa que `ingenieria-python` siga correspondiendo (skills nuevas, renombradas o que ahora
 usen otras herramientas).
+
+## Actualizar anti-slop
+
+```bash
+git clone --depth 1 https://github.com/miqdadbadjuber/anti-slop /tmp/anti-slop
+rm -rf plugins/anti-slop/skills && cp -r /tmp/anti-slop/skills plugins/anti-slop/skills
+cp /tmp/anti-slop/LICENSE plugins/anti-slop/LICENSE
+git -C /tmp/anti-slop rev-parse HEAD > plugins/anti-slop/UPSTREAM_COMMIT
+```
+
+Revisa el contenido nuevo antes de hacer commit (son instrucciones que Claude obedece), y que
+`antislop-qt` siga correspondiendo a sus reglas (R-01 a R-38).

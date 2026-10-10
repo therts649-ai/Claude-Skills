@@ -1,7 +1,7 @@
 {
   "name": "diseno-qt",
   "displayName": "Diseño y animación en Qt (PySide6)",
-  "description": "Traduce las reglas de las skills de Emil Kowalski (escritas para web) a PySide6/Qt Widgets: QPropertyAnimation, curvas Bezier en QEasingCurve, opacidad, avisos flotantes, reducir movimiento y pruebas de peor caso. Incluye impeccable-qt y taste-qt: cómo usar impeccable y taste-skill en apps de escritorio Qt.",
+  "description": "Traduce las reglas de las skills de Emil Kowalski (escritas para web) a PySide6/Qt Widgets: QPropertyAnimation, curvas Bezier en QEasingCurve, opacidad, avisos flotantes, reducir movimiento y pruebas de peor caso. Incluye impeccable-qt y taste-qt: cómo usar impeccable y taste-skill en apps de escritorio Qt. También antislop-qt: cómo usar anti-slop en escritorio.",
   "author": {
     "name": "therts649"
   },
@@ -15,6 +15,7 @@
   "dependencies": [
     "emil-design",
     "impeccable",
-    "taste-skill"
+    "taste-skill",
+    "anti-slop"
   ]
 }

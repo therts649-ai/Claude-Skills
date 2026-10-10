@@ -1,0 +1,11 @@
+{
+  "name": "anti-slop",
+  "description": "antislop de miqdadbadjuber, tal cual (MIT): 6 skills que filtran el «AI slop» en interfaz, textos, accesibilidad, acomodo y comentarios. Sin su servidor MCP de contraste (el script contrast-check.py viene en antislop-human).",
+  "author": {
+    "name": "miqdadbadjuber"
+  },
+  "homepage": "https://github.com/miqdadbadjuber/anti-slop",
+  "repository": "https://github.com/miqdadbadjuber/anti-slop",
+  "license": "MIT",
+  "keywords": ["ai-slop", "design-rules", "copy-rules", "accessibility"]
+}
